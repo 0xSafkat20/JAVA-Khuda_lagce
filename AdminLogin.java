@@ -11,8 +11,9 @@ public class AdminLogin implements ActionListener {
     JButton lgbtn, exbtn, bkbtn;
     JLabel label1, label02, header;
 
-    user un1, un2;
+    
     user users[];
+    user un1, un2;
 
     AdminLogin() {
 
