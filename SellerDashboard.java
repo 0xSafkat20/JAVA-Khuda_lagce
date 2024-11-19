@@ -4,289 +4,230 @@ import java.awt.*;
 
 public class SellerDashboard implements ActionListener {
 
-	//---------frame------
-	JFrame frame;
+    //--------- Frame and components -----
+    private JFrame frame; // Main frame
+    private JButton insertBtn, deleteBtn, dispBtn, searchBtn, logoutBtn, lcUser, proceedInsert, proceedDelete, proceedDisplay, proceedSearch; // Buttons
+    private JLabel lano, lbalance, opName; // Labels
+    private JTextField accNo, balance; // Text Fields
+    private JTextArea display; // Text Area for displaying messages
+    private ImageIcon i1; // Image Icon for frame
+    private JTable jt; // Table for product listing
+    private Account[] accounts = new Account[100]; // Array to hold product accounts
 
-	//------ Buttons--------
-	JButton insertBtn, deleteBtn, dispBtn, 
-	searchBtn, logoutBtn, lcUser, proceedInsert,
-	proceedDelete, proceedDisplay,proceedSearch;
+    // Constructor to set up the GUI components
+    public SellerDashboard() {
 
-	// --------labels---------
-	JLabel lano, lbalance, opName;
+        // Create the main frame
+        frame = new JFrame("Seller Dashboard");
 
-	// ------textfields--------
-	JTextField accNo, balance;
+        // Set frame properties
+        frame.setBounds(350, 90, 900, 650);
+        frame.setLayout(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);
 
-	// ------textarea----------
-	JTextArea display;
-
-	// --------imageIcon-----------
-	ImageIcon i1;
-
-	// -----for table----
-	JTable jt;
-
-	// ------Accounts------
-	Account[] accounts = new Account[100];
-
-
-	// -------------Parameter Constractor--------------------------
-
-	SellerDashboard() {
-		
-		// create frame
-		frame = new JFrame("Seller Dashboard");
-
-		//---------------- adjust size and set layout----------------------
-		frame.setBounds(350, 90, 900, 650);
-		frame.setLayout(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setVisible(true);
-
-		//Icon ADDED
+        // Set icon for the frame
         i1 = new ImageIcon("logo.png");
 
-		//------- construct components-------------
-		lano = new JLabel("Product Name");
-		lano.setForeground(Color.BLACK);
+        // Initialize labels
+        lano = new JLabel("Product Name");
+        lbalance = new JLabel("Price");
+        opName = new JLabel("Default!");
+        opName.setForeground(Color.BLACK);
 
-		lbalance = new JLabel("Price");
-		lbalance.setForeground(Color.BLACK);
+        // Initialize text fields
+        accNo = new JTextField(10);
+        balance = new JTextField(10);
 
-		opName = new JLabel("Default!");
-		opName.setForeground(Color.BLACK);
+        // Initialize text area for displaying messages
+        display = new JTextArea(10, 10);
 
-		accNo = new JTextField(10);
-		balance = new JTextField(10);
+        // Initialize buttons
+        insertBtn = new JButton("Add Product");
+        proceedInsert = new JButton("Add");
+        deleteBtn = new JButton("Delete Product");
+        proceedDelete = new JButton("Delete");
+        logoutBtn = new JButton("Logout");
 
-		display = new JTextArea(10,10);
+        // Set button properties and add action listeners
+        insertBtn.setBounds(250, 70, 120, 30);
+        insertBtn.setBackground(Color.decode("#f5f5f5"));
+        insertBtn.setForeground(Color.decode("#030202"));
+        insertBtn.addActionListener(this);
 
-		//------------Insert Button----------------
-		insertBtn = new JButton("Add Product");
-		proceedInsert = new JButton("Add ");
-		frame.add(insertBtn);
-		frame.add(proceedInsert);
-		insertBtn.setBounds(250, 70, 120, 30);
-		insertBtn.setBackground(Color.decode("#f5f5f5"));
-		insertBtn.setForeground(Color.decode("#030202"));
-		insertBtn.addActionListener(this);
+        proceedInsert.setBounds(350, 300, 120, 30);
+        proceedInsert.setBackground(Color.decode("#5b7ccf"));
+        proceedInsert.setForeground(Color.white);
+        proceedInsert.setVisible(false);
+        proceedInsert.addActionListener(this);
 
-		//------------------------Add opertion button--------------------
-		proceedInsert.setBounds(350, 300, 120, 30);
-		proceedInsert.setBackground(Color.decode("#5b7ccf"));
-		proceedInsert.setForeground(Color.white);
-		proceedInsert.setVisible(false);
-		proceedInsert.addActionListener(this);
+        deleteBtn.setBounds(450, 70, 120, 30);
+        deleteBtn.setBackground(Color.WHITE);
+        deleteBtn.setForeground(Color.BLACK);
+        deleteBtn.addActionListener(this);
 
-		// -----------------Delete Button----------------
-		deleteBtn = new JButton("Delete Product");
-		deleteBtn.setBounds(450, 70, 120, 30);
-		deleteBtn.setBackground(Color.WHITE);
-		deleteBtn.setForeground(Color.BLACK);
-		deleteBtn.addActionListener(this);
+        proceedDelete.setBounds(350, 300, 120, 30);
+        proceedDelete.setBackground(Color.decode("#5b7ccf"));
+        proceedDelete.setForeground(Color.white);
+        proceedDelete.setVisible(false);
+        proceedDelete.addActionListener(this);
 
-		//-----------------Delet Operation button------------
-		proceedDelete = new JButton("Delete");
-		proceedDelete.setVisible(false);
-		proceedDelete.addActionListener(this);
-		proceedDelete.setBackground(Color.decode("#5b7ccf"));
-		proceedDelete.setBounds(350, 300, 120, 30);
-		proceedDelete.setForeground(Color.white);
+        logoutBtn.setBounds(350, 500, 120, 30);
+        logoutBtn.setBackground(Color.decode("#f53131"));
+        logoutBtn.setForeground(Color.black);
+        logoutBtn.addActionListener(this);
 
-		// ------------------Display-------------
-		display.setBounds(300, 400, 250, 30);
-		display.setVisible(false);
+        // Set up the table (though not fully implemented in this example)
+        jt = new JTable();
 
-		// -------------------Log Out ---------------
-		logoutBtn = new JButton(" Logout");
-		logoutBtn.setBounds(350, 500, 120, 30);
-		logoutBtn.addActionListener(this);
-		logoutBtn.setBackground(Color.decode("#f53131"));
-		logoutBtn.setForeground(Color.black);
+        // Add all components to the frame
+        frame.add(lano);
+        frame.add(lbalance);
+        frame.add(accNo);
+        frame.add(opName);
+        frame.add(balance);
+        frame.add(insertBtn);
+        frame.add(proceedInsert);
+        frame.add(deleteBtn);
+        frame.add(proceedDelete);
+        frame.add(display);
+        frame.add(logoutBtn);
+        frame.add(jt);
 
-		//------- table--------------
-		jt = new JTable();
+        // Set component positions and font styling
+        lano.setBounds(200, 200, 150, 25);
+        lano.setFont(new Font("Default", Font.BOLD, 15));
+        lbalance.setBounds(200, 250, 100, 25);
+        lbalance.setFont(new Font("Default", Font.BOLD, 15));
+        accNo.setBounds(320, 200, 200, 30);
+        balance.setBounds(320, 250, 200, 30);
+        display.setBounds(300, 400, 250, 30);
 
-		//--------add components------------
-		frame.add(lano);
-		frame.add(lbalance);
-		frame.add(accNo);
-		frame.add(opName);
-		frame.add(balance);
-		frame.add(deleteBtn);
-		frame.add(proceedDelete);
-		frame.add(display);
-		frame.add(logoutBtn);
-		frame.add(jt);
+        // Initially hide unnecessary components
+        lano.setVisible(false);
+        lbalance.setVisible(false);
+        opName.setVisible(false);
+        accNo.setVisible(false);
+        balance.setVisible(false);
+        display.setVisible(false);
+
+        // Set frame icon
         frame.setIconImage(i1.getImage());
+    }
 
-		//---------- Set Bounce----------
-		lano.setBounds(200, 200, 150, 25);
-		lano.setFont(new Font("Default", Font.BOLD, 15));
-		lbalance.setBounds(200, 250, 100, 25);
-		lbalance.setFont(new Font("Default", Font.BOLD, 15));
-		accNo.setBounds(320, 200, 200, 30);
-		balance.setBounds(320, 250, 200, 30);
+    // Add account to the account array
+    public void addAccount(Account a) {
+        boolean added = false;
+        for (int i = 0; i < accounts.length; i++) {
+            if (accounts[i] == null) {
+                accounts[i] = a;
+                added = true;
+                break;
+            }
+        }
+        displayMessage(added ? "Product added." : "Product cannot be added.");
+    }
 
-		// Set Method
-		lano.setVisible(false);
-		lbalance.setVisible(false);
-		opName.setVisible(false);
-		accNo.setVisible(false);
-		balance.setVisible(false);
+    // Search for an account by its account number
+    public Account searchAccount(String accNo) {
+        for (Account account : accounts) {
+            if (account != null && account.getAccNo().equals(accNo)) {
+                return account;
+            }
+        }
+        return null;
+    }
 
-		// addActionListener
-		lcUser.addActionListener(this);
-		searchBtn.addActionListener(this);
+    // Delete an account by its account number
+    public boolean deleteAccount(String accNo) {
+        for (int i = 0; i < accounts.length; i++) {
+            if (accounts[i] != null && accounts[i].getAccNo().equals(accNo)) {
+                accounts[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
 
-		// adjust size and set layout
-		frame.setBounds(350, 90, 800, 650);
-		frame.setLayout(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setIconImage(i1.getImage());
-		frame.setResizable(false);
-		frame.setVisible(true);
-	}
+    // Display messages in the text area
+    private void displayMessage(String message) {
+        display.setText(message);
+        display.setFont(new Font("Default", Font.BOLD, 20));
+    }
 
-	//---------------Accunt adding array-------------
-	public void addAccount(Account a) {
-		int count = 0;
+    // Handle button actions
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == logoutBtn) {
+            new LogInPage();
+            frame.setVisible(false);
+            System.exit(0);
+        } else if (e.getSource() == insertBtn) {
+            prepareInsertView();
+        } else if (e.getSource() == deleteBtn) {
+            prepareDeleteView();
+        } else if (e.getSource() == proceedInsert) {
+            handleAddProduct();
+        } else if (e.getSource() == proceedDelete) {
+            handleDeleteProduct();
+        }
+    }
 
-		for (int i = 0; i < accounts.length; i++) {
-			if (accounts[i] == null) {
-				accounts[i] = a;
-				count++;
-				break;
-			}
-		}
-		if (count == 0) {
-			display.setText(" Product can not added.");
-			display.setFont(new Font("Default", Font.BOLD, 20));
-		} else {
-			display.setText(" Product added. ");
-			display.setFont(new Font("Default", Font.BOLD, 20));
-		}
-	}
+    // Prepare the UI for the "Add Product" action
+    private void prepareInsertView() {
+        lano.setVisible(true);
+        lbalance.setVisible(true);
+        opName.setText("Operation: Add");
+        opName.setVisible(true);
+        accNo.setVisible(true);
+        balance.setVisible(true);
+        display.setVisible(true);
+        proceedInsert.setVisible(true);
+        proceedDelete.setVisible(false);
+    }
 
-	//searching a product
-	public Account searchAccount(String accNo)
-	{
-		Account a = null;
-		for (int i = 0; i < accounts.length; i++) {
-			if (accounts[i] != null) {
-				if (accounts[i].getAccNo().equals(accNo)) {
-					a = accounts[i];
-					break;
-				}
-			}
-		}
-		return a;
-	}
+    // Prepare the UI for the "Delete Product" action
+    private void prepareDeleteView() {
+        lano.setVisible(true);
+        accNo.setVisible(true);
+        display.setVisible(true);
+        display.setText(null);
+        proceedInsert.setVisible(false);
+        proceedDelete.setVisible(true);
+        opName.setText("Operation: Delete");
+        opName.setVisible(true);
+        lbalance.setVisible(false);
+        balance.setVisible(false);
+    }
 
-	//-*--------deleting a product------------
-	public boolean deleteAccount(String accNo)
-	{
-		boolean test = false;
+    // Handle adding a product to the system
+    private void handleAddProduct() {
+        String accNum = accNo.getText();
+        String bal = balance.getText();
 
-		for (int i = 0; i < accounts.length; i++) {
-			if (accounts[i] != null) {
-				if (accounts[i].getAccNo().equals(accNo)) {
-					accounts[i] = null;
-					test = true;
-					break;
-				}
-			}
-		}
-		return test;
-	}
+        if (!accNum.isEmpty() && !bal.isEmpty()) {
+            if (searchAccount(accNum) == null) {
+                Account a = new Account(accNum, bal);
+                addAccount(a);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "A product already exists with that Product No. " + accNum + ". Try again");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter valid information in the fields");
+        }
+    }
 
-	public void actionPerformed(ActionEvent e) {
+    // Handle deleting a product from the system
+    private void handleDeleteProduct() {
+        String accNum = accNo.getText();
+        boolean isDeleted = deleteAccount(accNum);
+        displayMessage(isDeleted ? "Product deleted successfully." : "Product could not be deleted.");
+    }
 
-		if (e.getSource() == logoutBtn) {
-			new LogInPage();
-			frame.setVisible(false);
-			System.exit(0);
-		} else if (e.getSource() == lcUser) {
-			String user = lcUser.getText();
-			new Profile(user);
-			frame.setVisible(false);
-		} else if (e.getSource() == insertBtn) {
-			lano.setVisible(true);
-			lbalance.setVisible(true);
-			opName.setText("Operation: Update");
-			opName.setVisible(true);
-			accNo.setVisible(true);
-			accNo.setText(null);
-			balance.setVisible(true);
-			balance.setText(null);
-			display.setText(null);
-			display.setVisible(true);
-			proceedInsert.setVisible(true);
-			proceedDelete.setVisible(false);
-			proceedSearch.setVisible(false);
-		} 
-		
-		else if (e.getSource() == deleteBtn) 
-		{
-			lano.setVisible(true);
-			accNo.setVisible(true);
-			accNo.setText(null);
-			display.setVisible(true);
-			display.setText(null);
-			proceedInsert.setVisible(false);
-			proceedDelete.setVisible(true);
-			proceedSearch.setVisible(false);
-			opName.setText("Operation: Delete");
-			opName.setVisible(true);
-			lbalance.setVisible(false);
-			balance.setVisible(false);
-		} 
-
-		if (e.getSource() == proceedInsert) {
-
-			String accNum = accNo.getText();
-			String bal = balance.getText();
-
-			if (accNum.isEmpty() == false && bal.isEmpty() == false) {
-				if (searchAccount(accNum) == null) {
-					Account a = new Account(accNum, bal);
-					this.addAccount(a);
-				} else {
-					JOptionPane.showMessageDialog(null,
-							"A Product already exists with that Product No. " + accNum + ". Try again");
-				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Please enter valid information in the fields");
-			}
-
-		}
-		if (e.getSource() == proceedDelete) {
-			String test = accNo.getText();
-
-			boolean isDeleted = this.deleteAccount(test);
-
-			if (isDeleted == true) {
-				display.setText("Product deleted successfully.");
-				display.setFont(new Font("Default", Font.BOLD, 17));
-			} else {
-				display.setText("Product could not be deleted.");
-				display.setFont(new Font("Default", Font.BOLD, 17));
-			}
-		}
-		if (e.getSource() == proceedSearch) {
-			String test = accNo.getText();
-
-			Account a = this.searchAccount(test);
-
-			if (a != null) {
-				display.setText("Product found!!");
-				display.setFont(new Font("Default", Font.BOLD, 17));
-			} else {
-				display.setText("Sorry. Product could not be found");
-				display.setFont(new Font("Default", Font.BOLD, 17));
-			}
-		}
-	}
+    // Main method to run the Seller Dashboard
+    public static void main(String[] args) {
+        new SellerDashboard(); // Create an instance of SellerDashboard to launch the GUI
+    }
 }

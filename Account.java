@@ -1,27 +1,28 @@
+public class Account {
+    private String accNo;
+    private String balance;
 
-public class Account
-{
-	private String accNo;
-	
-	//NEED TO BE SAVED AS DOUBLE, SO NEED TO MAKE NECESSARY CHANGES IN DASHBOARD
-	private String balance;
-	
-	public Account(String accNo, String balance)
-	{
-		this.accNo = accNo;
-		this.balance = balance;
-	}
-	public String getAccNo()
-	{
-		return accNo;
-	}
-	public String balance()
-	{
-		return balance;
-	}
-	public void display()
-	{
-		System.out.println("ACC NO: "+accNo);
-		System.out.println("Balancee: "+balance);
-	}
+    // Constructor
+    public Account(String accNo, String balance) {
+        this.accNo = accNo;
+        this.balance = balance;
+    }
+
+    // Getter methods
+    public String getAccNo() {
+        return accNo;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    // Setter methods (optional)
+    public void setAccNo(String accNo) {
+        this.accNo = accNo;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 }

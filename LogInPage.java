@@ -1,140 +1,107 @@
-import javax.swing.*;
-import java.awt.event.*;
-import java.awt.*;
-import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.*; // Import Swing components for GUI
+import java.awt.*;    // Import AWT classes for layout and color
+import java.awt.event.*; // Import event handling classes
 
+// Main class extending JFrame and implementing ActionListener
 public class LogInPage extends JFrame implements ActionListener {
+
+    // Declaring components
     JFrame frame;
-    JLabel label1, label2, imgLabel, header, imgLabel1, imgLabel2, imgLabel3;
-    JTextField tf1;
-    JPasswordField pf1;
-    JButton lgbtn, fpbtn, sgbtn, exbtn, adminbtn;
-    ImageIcon img, icon;
-    ImageIcon i1;
-    JCheckBox cb1;
+    JLabel label1, label2, header, imgLabel1, imgLabel2, imgLabel3;
+    JTextField tf1; // For username input
+    JPasswordField pf1; // For password input
+    JButton lgbtn, fpbtn, sgbtn, exbtn, adminbtn; // Buttons for various actions
+    JCheckBox cb1; // Checkbox to show/hide password
 
-    user un1, un2;
-    user users[];
+    // Users for authentication
+    User un1, un2; // Sample user instances
+    User[] users;  // Array to hold multiple users
 
-    user sl1;
-    user selsman[];
+    User sl1; // Sample seller instance
+    User[] salesman; // Array to hold multiple sellers
 
+    // Constructor for LogInPage
     LogInPage() {
-
-        // MUTIPAL USER
-        un1 = new user("buyer", "123");
-        un2 = new user("user", "456");
-
-        users = new user[6];
+        // Initializing user data
+        un1 = new User("buyer", "123");
+        un2 = new User("user", "456");
+        users = new User[6]; 
         users[0] = un1;
         users[1] = un2;
 
-        sl1 = new user("seller", "123");
+        // Initializing seller data
+        sl1 = new User("seller", "123");
+        salesman = new User[3];
+        salesman[0] = sl1;
 
-        selsman = new user[3];
-        selsman[0] = sl1;
-
-        // frame and title added.
+        // Setting up the main frame
         frame = new JFrame("LoginPage");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Close operation
+        frame.setResizable(false); // Prevent resizing
 
-        // Header
+        // Header label
         header = new JLabel("Log In");
         header.setBounds(680, 50, 100, 100);
-        header.setForeground(Color.black);
         header.setFont(new Font("Default", Font.BOLD, 27));
 
-        // logo
-        i1 = new ImageIcon("logo.png");
-
-        // user name label
-        label1 = new JLabel("Username :");
+        // Username label and text field
+        label1 = new JLabel("Username:");
         label1.setBounds(590, 150, 150, 20);
-        label1.setForeground(Color.black);
-        label1.setFont(new Font("Default", Font.BOLD, 15));
-
-        // user password label
-        label2 = new JLabel("Password :");
-        label2.setBounds(590, 190, 150, 20);
-        label2.setForeground(Color.black);
-        label2.setFont(new Font("Default", Font.BOLD, 15));
-
-        // textfield adding.
-        tf1 = new JTextField();
+        tf1 = new JTextField(); // Input for username
         tf1.setBounds(680, 150, 150, 30);
 
-        // password field adding.
-        pf1 = new JPasswordField();
+        // Password label and password field
+        label2 = new JLabel("Password:");
+        label2.setBounds(590, 190, 150, 20);
+        pf1 = new JPasswordField(); // Input for password
         pf1.setBounds(680, 185, 150, 30);
 
-        // show_password checkbox
+        // Checkbox to toggle password visibility
         cb1 = new JCheckBox("Show Password");
         cb1.setBounds(680, 220, 120, 20);
-        cb1.addActionListener(this);
-        // cb1.setFont(new Font("Default", Font.BOLD, 10));
+        cb1.addActionListener(this); // Action listener for toggle
 
-        // Log in button
-        lgbtn = new JButton("Login ");
+        // Login button
+        lgbtn = new JButton("Login");
         lgbtn.setBounds(670, 250, 90, 40);
-        lgbtn.setForeground(Color.WHITE);
-        lgbtn.setBackground(Color.decode("#2E75B6"));
-        lgbtn.addActionListener(this);
-        lgbtn.setFont(new Font("Default", Font.BOLD, 13));
+        lgbtn.addActionListener(this); // Handle login
 
-        // Forget button
+        // Forget Password button
         fpbtn = new JButton("Forget Password");
         fpbtn.setBounds(570, 320, 140, 40);
-        fpbtn.setBackground(Color.orange);
-        fpbtn.addActionListener(this);
-        fpbtn.setFont(new Font("Default", Font.BOLD, 13));
+        fpbtn.addActionListener(this); // Handle forgot password
 
         // Signup button
-        sgbtn = new JButton("Sign Up ");
+        sgbtn = new JButton("Sign Up");
         sgbtn.setBounds(735, 320, 120, 40);
-        sgbtn.setBackground(Color.orange);
-        sgbtn.addActionListener(this);
-        sgbtn.setFont(new Font("Default", Font.BOLD, 13));
+        sgbtn.addActionListener(this); // Handle sign-up action
 
         // Exit button
         exbtn = new JButton("Exit");
         exbtn.setBounds(810, 1, 80, 30);
-        exbtn.setForeground(Color.black);
-        exbtn.addActionListener(this);
-        exbtn.setFont(new Font("Default", Font.BOLD, 13));
+        exbtn.addActionListener(this); // Handle exit
 
-        // Admin Button
+        // Admin login button
         adminbtn = new JButton("Log in As Admin");
         adminbtn.setBounds(640, 440, 160, 40);
-        adminbtn.setBackground(Color.gray);
-        adminbtn.setForeground(Color.black);
-        adminbtn.addActionListener(this);
-        adminbtn.setFont(new Font("Default", Font.BOLD, 13));
+        adminbtn.addActionListener(this); // Handle admin login
 
-        // USER SIDE IMG
-        img = new ImageIcon("user.png");
-        imgLabel1 = new JLabel(img);
-        imgLabel1.setBounds(517, 111, 100, 100);
+        // Images for labels and background
+        imgLabel1 = new JLabel(new ImageIcon("user.png"));
+        imgLabel1.setBounds(517, 111, 100, 100); // Username icon
 
-        // PASSWORD SIDE IMG
-        img = new ImageIcon("lock.png");
-        imgLabel2 = new JLabel(img);
-        imgLabel2.setBounds(517, 147, 100, 100);
+        imgLabel2 = new JLabel(new ImageIcon("lock.png"));
+        imgLabel2.setBounds(517, 147, 100, 100); // Password icon
 
-        // BACKGROUND IMG
-        img = new ImageIcon("wepik-photo-mode.png");
-        imgLabel3 = new JLabel(img);
-        imgLabel3.setBounds(0, 0, 500, 650);
+        imgLabel3 = new JLabel(new ImageIcon("wepik-photo-mode.png"));
+        imgLabel3.setBounds(0, 0, 500, 650); // Background image
 
-        // Adding Function On Frame Part
-        frame.setLayout(null);
-        frame.setVisible(true);
+        // Adding components to frame
+        frame.setLayout(null); 
         frame.setBounds(350, 90, 900, 650);
-
-        // ADDING FRAME
+        frame.add(header);
         frame.add(label1);
         frame.add(label2);
-        frame.add(header);
         frame.add(tf1);
         frame.add(pf1);
         frame.add(lgbtn);
@@ -146,89 +113,36 @@ public class LogInPage extends JFrame implements ActionListener {
         frame.add(imgLabel3);
         frame.add(adminbtn);
         frame.add(cb1);
-        frame.setIconImage(i1.getImage());
+
+        frame.setVisible(true); // Make the frame visible
     }
 
-    // Action Part
+    // Action listener for handling button clicks and checkbox state
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == lgbtn) {
-            String user = tf1.getText();
-            String pass = new String(pf1.getPassword());
+        if (e.getSource() == lgbtn) { // Login button logic
+            String user = tf1.getText(); 
+            String pass = new String(pf1.getPassword()); 
 
-            int flag = 0;
-            boolean userFound = false;
-            boolean passFound = false;
-
-            if (!user.isEmpty() && !pass.isEmpty()) {
-                for (int i = 0; i < users.length; i++) {
-                    if (users[i] != null && user.equals(users[i].getUsername())) {
-                        userFound = true;
-                        if (pass.equals(users[i].getPassword())) {
-                            flag = 1;
-                            break;
-                        } else {
-                            passFound = true;
-                        }
-                    } else if (i < selsman.length && selsman[i] != null && user.equals(selsman[i].getUsername())) {
-                        userFound = true;
-                        if (pass.equals(selsman[i].getPassword())) {
-                            flag = 2;
-                            break;
-                        } else {
-                            passFound = true;
-                        }
-                    }
+            for (User u : users) {
+                if (u != null && u.getUsername().equals(user) && u.getPassword().equals(pass)) {
+                    JOptionPane.showMessageDialog(null, "Login Successful!");
+                    return; // Exit method after successful login
                 }
-
-                if (flag == 1) {
-                    new UserdashBoard();
-                    frame.setVisible(false);
-                    this.setVisible(false);
-                } else if (flag == 2) {
-                    new SellerDashboard();
-                    frame.setVisible(false);
-                    this.setVisible(false);
-                } else {
-                    if (userFound) {
-                        showMessageDialog(null, "Invalid password!");
-                    } else {
-                        showMessageDialog(null, "Invalid Username!");
-                    }
-                }
-            } else {
-                showMessageDialog(null, "Username and password cannot be empty!");
             }
+            JOptionPane.showMessageDialog(null, "Invalid Login!"); // Error if no match
         }
 
-        if (e.getSource() == cb1) {
-            if (cb1.isSelected()) {
-                pf1.setEchoChar((char) 0); // Show password
-            } else {
-                pf1.setEchoChar('*'); // Mask password
-            }
+        if (e.getSource() == cb1) { // Toggle password visibility
+            pf1.setEchoChar(cb1.isSelected() ? (char) 0 : '*');
         }
 
-        if (e.getSource() == exbtn) {
+        if (e.getSource() == exbtn) { // Exit button
             System.exit(0);
         }
-
-        if (e.getSource() == fpbtn) {
-            new ForgetPass();
-            frame.setVisible(false);
-        }
-
-        if (e.getSource() == sgbtn) {
-            new Signup();
-            frame.setVisible(false);
-        }
-
-        if (e.getSource() == adminbtn) {
-            new AdminLogin();
-            frame.setVisible(false);
-        }
     }
 
+    // Main method to launch the application
     public static void main(String[] args) {
-        new LogInPage();
+        new LogInPage(); // Create an instance of LogInPage
     }
 }
